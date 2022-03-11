@@ -10,26 +10,31 @@ class PlayerArrow {
     // this.body = Bodies.rectangle(x, y, this.width, this.height);
     // this.body = Body.rectangle(x, y, this.width, this.height, options);
     // this.body = Bodies.rectangle(x, y, options);
-    // this.body = Bodies.rectangle(x, y, this.width, this.height, options);
+    this.body = Bodies.rectangle(x, y, this.width, this.height, options);
     
     this.image = loadImage("./assets/arrow.png");
     World.add(world, this.body);
   }
 
-  shoot(archerAngle) {
-    var velocity = p5.Vector.fromAngle(archerAngle);
-    velocity.mult(20);
-    Matter.Body.setStatic(this.body, false);
-    Matter.Body.setVelocity(this.body, { x: velocity.x, y: velocity.y });
+  shoot(archerAngle) { 
+    archerAngle += 90; 
+    this.velocity = p5.Vector.fromAngle(archerAngle * (3.14 / 180)); 
+    this.velocity.mult(0.5); 
+    Body.setVelocity(this.body, { x: this.velocity.x * (180 / 3.14), y: this.velocity.y * (180 / 3.14) }); 
+    Body.setStatic(this.body, false); 
+    push()
+    rotate(archerAngle)
+    Body.setAngle(this.body, archerAngle)
+    pop()
   }
 
-  display() {
+  display(archerAngle, isShot) {
     var pos = this.body.position;
     var angle = this.body.angle;
 
     push();
     translate(pos.x, pos.y);
-    rotate(angle);
+      rotate(angle)
     imageMode(CENTER);
     image(this.image, 0, 0, this.width, this.height);
     pop();

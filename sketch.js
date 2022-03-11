@@ -2,6 +2,7 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
+const Body = Matter.Body
 
 var engine, world;
 var canvas;
@@ -9,6 +10,7 @@ var palyer, playerBase, playerArcher;
 var arrow;
 var baseimage;
 var playerimage;
+var isShot
 
 function preload() {
   backgroundImg = loadImage("./assets/background.png");
@@ -56,12 +58,12 @@ function draw() {
   Engine.update(engine);
 
   playerArcher.display();
-  arrow.display();
+  arrow.display(playerArcher.body.angle);
 
   if (keyCode === 32) {
     // arrow.(playerArcher.body.angle);
     // arrow.shoot(playerArcher.angle);
-    // arrow.shoot(playerArcher.body.angle);
+    arrow.shoot(playerArcher.body.angle);
     // arrow.shoot(playerArcher);
   }
 
